@@ -1,21 +1,16 @@
 # Magic-Collection-Manager
 Utility application for players of the card game Magic:the Gathering
 
-This is currently a very basic utility application. The current features it has are:
-  ability to cache mid prices from tcgplayer.com
-  input and keep track of your collection
-  comparison of two lists of cards for trading
-  picture display when you click on a card
+#Current Features
+It caches prices from tcgplayer.com, keeps track of your collection, compares the prices of two lists of cards for trading, and displays a picture when you click on a card.
   
-I have several features in mind to improve this project
-  modo prices from supernova bots (http://supernovabots.com/prices_0.txt)
-  ability to do deckbuilding
-    restrict cards to ones you own
-    tell you how much you would have to spend to complete a deck
-    enforce format rules for deckbuilding
-  add to trade system
-    trades can add and remove cards from your inventory
-    keep track of trades over time to see if you profited or lost money
-  keep a database of card prices over time
-    I might be able to pull data from a third party source
-  Improve the UI
+#Future Improvements
+I have several ideas where this could go. 
+
+It could incorporate modo prices by scraping supernova bots price list that is found at http://supernovabots.com/prices_0.txt . 
+
+I would like to add in deckbuilding with the ability to import a deck from Forge, Deckbox, or MODO, make changes to it, and export it again. I would also like to add the ability to compare a decklist to cardsw you already own to show how much a deck would cost for you to build.
+
+I want to add to the trade system so when you make a trade, it removes the cards you traded from your collection, adds the cards you traded for into your collection and saves the trade to review later so you can see how you did in the trade.
+
+I would also like to get price history. I tried doing this earlier, but it was very resource-intensive. If I manage to set up a server, this may be possible in the future.
