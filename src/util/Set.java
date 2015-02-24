@@ -1,6 +1,5 @@
 package util;
 
-import java.util.ArrayList;
 import java.util.Vector;
 
 public class Set extends Object{
@@ -41,22 +40,22 @@ public class Set extends Object{
 		}
 	}
 	
-	public void addPrice(String cardName, ArrayList<PriceWithDate> doubleList) {
-		if(cardName.contains("//")){
-			String[] cardNames = cardName.split("//");
-			cardName = cardNames[0].trim();
-			addPrice(cardNames[1].trim(), doubleList);
-		}
-		if(cardName.contains("(")){
-			cardName = cardName.substring(0, cardName.indexOf('(')).trim();
-		}
-		for(Card c : cards){
-			if(c.getName().replace("Æ", "Ae").replace("ö", "o").equals(cardName) && c.getPriceHistory().size() == 0){
-				c.setPriceHistory(doubleList);
-				break;
-			}
-		}
-	}
+//	public void addPrice(String cardName, ArrayList<PriceWithDate> doubleList) {
+//		if(cardName.contains("//")){
+//			String[] cardNames = cardName.split("//");
+//			cardName = cardNames[0].trim();
+//			addPrice(cardNames[1].trim(), doubleList);
+//		}
+//		if(cardName.contains("(")){
+//			cardName = cardName.substring(0, cardName.indexOf('(')).trim();
+//		}
+//		for(Card c : cards){
+//			if(c.getName().replace("Æ", "Ae").replace("ö", "o").equals(cardName) && c.getPriceHistory().size() == 0){
+//				c.setPriceHistory(doubleList);
+//				break;
+//			}
+//		}
+//	}
 	
 	public String getSetCode() { return setCode; }
 	public void setSetCode(String setCode) { this.setCode = setCode; }

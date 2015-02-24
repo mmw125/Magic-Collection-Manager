@@ -29,7 +29,6 @@ public abstract class Panel {
 		}
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
-		
 	}
 	
 	/**

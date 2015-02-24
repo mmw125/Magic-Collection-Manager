@@ -1,15 +1,13 @@
 package util;
 
+import interfaceComponents.Console;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import util.Date;
 
 import java.util.Scanner;
 
@@ -29,7 +27,7 @@ public class PriceScraper implements Runnable{
 		webClient = new WebClient();
 	}
 	
-	public void getAllPrices(DataParser parser){
+	public void getAllPrices(){
 		for(Set s : parser.getSets()){
 			if(!s.getOnlineOnly()){
 				getPrices(s, parser);
@@ -39,14 +37,15 @@ public class PriceScraper implements Runnable{
 	
 	public void getPrices(Set setIn, DataParser parser){
 		String url = "http://magic.tcgplayer.com/db/price_guide.asp?setname="+nameChanges(setIn.getName());
+		Console.getInstance().setText(nameChanges(setIn.getName()));
 		System.out.println(setIn.getName());
 		PageParser pageParser = new PageParser(parser);
 		HtmlPage page = null;
         try {
                 page = webClient.getPage(url);
         } catch (Exception e) {
-                System.out.println("Invalid web address");
-                e.printStackTrace();
+            System.out.println("Invalid web address");
+            e.printStackTrace();
         }
         pageParser.parsePage(page, setIn);
 	}
@@ -123,7 +122,7 @@ public class PriceScraper implements Runnable{
 
 	/**
 	 * Exports all of current pricing data
-	 * @throws IOException
+	 * @throws IOException if it cannot create the file or read it
 	 */
 	public void exportCurrentData() throws IOException{
 		File f = new File("currentPrices.txt");
@@ -137,79 +136,79 @@ public class PriceScraper implements Runnable{
 		writer.close();
 	}
 	
-	/**
-	 * Exports the card price database
-	 * @throws IOException
-	 */
-	public void exportData() throws IOException{
-		File f = new File("priceDatabase.txt");
-		f.createNewFile();
-		PrintWriter writer = new PrintWriter(f);
-		String s = "DATES";
-		for(PriceWithDate pwd : parser.getCards().get(0).getPriceHistory()){
-			s += "~"+pwd.getDate();
-		}
-		s+= "~"+PriceScraper.getCurrentDate();
-		writer.println(s);
-		for(Card c : parser.getCards()){
-			if(c.getCurrentPrice() != 0){
-				String output = c.getSet().getCode()+"~"+c.getName();
-				for(PriceWithDate priceWithDate : c.getPriceHistory()){
-					output = output + "~" + priceWithDate.getPrice();
-				}
-				output = output + "~" + c.getCurrentPrice();
-				writer.println(output);
-			}else{
-				if(!c.getSet().getOnlineOnly() || c.getSet().getCode() == "VAN"){
-//					System.out.println(c.getSet().getCode()+"~"+c.getName()+"~"+c.getCurrentPrice());
-				}
-			}
-			
-		}
-		writer.close();
-	}
+//	/**
+//	 * Exports the card price database
+//	 * @throws IOException
+//	 */
+//	public void exportData() throws IOException{
+//		File f = new File("priceDatabase.txt");
+//		f.createNewFile();
+//		PrintWriter writer = new PrintWriter(f);
+//		String s = "DATE";
+////		for(PriceWithDate pwd : parser.getCards().get(0).getPriceHistory()){
+////			s += "~"+pwd.getDate();
+////		}
+//		s+= "~"+PriceScraper.getCurrentDate();
+//		writer.println(s);
+//		for(Card c : parser.getCards()){
+//			if(c.getCurrentPrice() != 0){
+//				String output = c.getSet().getCode()+"~"+c.getName();
+////				for(PriceWithDate priceWithDate : c.getPriceHistory()){
+////					output = output + "~" + priceWithDate.getPrice();
+////				}
+//				output = output + "~" + c.getCurrentPrice();
+//				writer.println(output);
+//			}else{
+//				if(!c.getSet().getOnlineOnly() || c.getSet().getCode() == "VAN"){
+////					System.out.println(c.getSet().getCode()+"~"+c.getName()+"~"+c.getCurrentPrice());
+//				}
+//			}
+//			
+//		}
+//		writer.close();
+//	}
 	
-	public void importPriceDatabase() throws FileNotFoundException{
-		File f = new File("priceDatabase.txt");
-		if(f.exists()){
-			Scanner scanner = new Scanner(f);
-			String line; ArrayList<String> splitLine;
-			ArrayList<Date> dates = new ArrayList<Date>();
-			Set storedSet = parser.getSets().get(0);
-			while(scanner.hasNextLine()){
-				line = scanner.nextLine();
-				splitLine = new ArrayList<String>(Arrays.asList((line.split("~"))));
-				if(line.startsWith("DATES")){
-					for(int i = 1; i < splitLine.size(); i++){
-						dates.add(Date.parseDate(splitLine.get(i)));
-					}
-				}else{
-					ArrayList<PriceWithDate> priceWithDate = new ArrayList<PriceWithDate>();
-					for(int i = 2; i < splitLine.size(); i++){
-						priceWithDate.add(new PriceWithDate(Double.parseDouble(splitLine.get(i)), dates.get(i-2)));
-					}
-					if(splitLine.get(0).equals(storedSet.getCode())){
-						if(splitLine.get(0).equals(storedSet.getCode())){
-							storedSet.addPrice(splitLine.get(1), priceWithDate);
-						}
-					}else{
-						for(Set s : parser.getSets()){
-							if(splitLine.get(0).equals(s.getCode())){
-								storedSet = s;
-								s.addPrice(splitLine.get(1), priceWithDate);
-								break;
-							}
-						}
-					}
-					
-				}
-				
-			}
-			scanner.close();
-		}else{
-		}
-		
-	}
+//	public void importPriceDatabase() throws FileNotFoundException{
+//		File f = new File("priceDatabase.txt");
+//		if(f.exists()){
+//			Scanner scanner = new Scanner(f);
+//			String line; ArrayList<String> splitLine;
+//			ArrayList<Date> dates = new ArrayList<Date>();
+//			Set storedSet = parser.getSets().get(0);
+//			while(scanner.hasNextLine()){
+//				line = scanner.nextLine();
+//				splitLine = new ArrayList<String>(Arrays.asList((line.split("~"))));
+//				if(line.startsWith("DATES")){
+//					for(int i = 1; i < splitLine.size(); i++){
+//						dates.add(Date.parseDate(splitLine.get(i)));
+//					}
+//				}else{
+//					ArrayList<PriceWithDate> priceWithDate = new ArrayList<PriceWithDate>();
+//					for(int i = 2; i < splitLine.size(); i++){
+//						priceWithDate.add(new PriceWithDate(Double.parseDouble(splitLine.get(i)), dates.get(i-2)));
+//					}
+//					if(splitLine.get(0).equals(storedSet.getCode())){
+//						if(splitLine.get(0).equals(storedSet.getCode())){
+//							storedSet.addPrice(splitLine.get(1), priceWithDate);
+//						}
+//					}else{
+//						for(Set s : parser.getSets()){
+//							if(splitLine.get(0).equals(s.getCode())){
+//								storedSet = s;
+//								s.addPrice(splitLine.get(1), priceWithDate);
+//								break;
+//							}
+//						}
+//					}
+//					
+//				}
+//				
+//			}
+//			scanner.close();
+//		}else{
+//		}
+//		
+//	}
 	
 	public void importCurrentPrices() throws FileNotFoundException{
 		File f = new File("currentPrices.txt");
@@ -227,8 +226,6 @@ public class PriceScraper implements Runnable{
 				}
 			}
 			scanner.close();
-		}else{
-			//TODO download the file(s)
 		}
 	}
 	
@@ -244,12 +241,6 @@ public class PriceScraper implements Runnable{
 	}
 	
 	public void run(){
-//		try {
-//			importPriceDatabase();
-//			System.out.println("DONE");
-//		} catch (FileNotFoundException e1) {
-//			e1.printStackTrace();
-//		}
 		try {
 			importCurrentPrices();
 		} catch (FileNotFoundException e) {
@@ -258,11 +249,11 @@ public class PriceScraper implements Runnable{
 	}
 	
 	public void scrapePrices(){
-		try { importPriceDatabase(); } catch (FileNotFoundException e) { e.printStackTrace(); }
+//		try { importPriceDatabase(); } catch (FileNotFoundException e) { e.printStackTrace(); }
 		try { importCurrentPrices(); } catch (FileNotFoundException e) { e.printStackTrace(); }
-		try { exportData(); } catch (IOException e) { e.printStackTrace(); }
-		wipeCurrentCardData();
-		getAllPrices(parser);
+//		try { exportData(); } catch (IOException e) { e.printStackTrace(); }
+//		wipeCurrentCardData();
+		getAllPrices();
 		try { exportCurrentData(); } catch (IOException e) { e.printStackTrace();}
 	}
 	

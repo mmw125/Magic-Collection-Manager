@@ -6,6 +6,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
+/**
+ * Takes an image url and saves it to a file in the given location
+ * @author http://www.avajava.com/tutorials/lessons/how-do-i-save-an-image-from-a-url-to-a-file.html
+ */
 public class SaveImageFromUrl {
 
 	public static void saveImage(String imageUrl, String destinationFile) throws IOException {

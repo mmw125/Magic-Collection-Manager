@@ -18,7 +18,7 @@ import util.DataParser;
 import util.Set;
 
 /**
- * A Panel that can search for cards and add them to a list
+ * A panel that can search for cards and add them to a list
  * that is exported to the local file system
  * @author Mark Wiggans
  */

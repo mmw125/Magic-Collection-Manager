@@ -12,7 +12,6 @@ import com.google.gson.stream.JsonReader;
  * This imports a json file containing all of the card data into card and set classes
  * This is relatively efficient and should take a second or two depending on the speed of the computer
  * @author Mark Wiggans
- *
  */
 public class DataParser {
 	private ArrayList<Card> cards;
@@ -26,15 +25,15 @@ public class DataParser {
 		return parser;
 	}
 
-//	public static void main(String[] args) throws IOException {
-//		DataParser p = new DataParser();
-//		JsonReader reader = new JsonReader(new InputStreamReader(new FileInputStream(new File("AllSets.json")), "UTF-8"));
-//		try{
-//			p.readArray(reader);
-//		}finally{
-//			reader.close();
-//		}
-//	}
+	public static void main(String[] args) throws IOException {
+		DataParser p = new DataParser();
+		JsonReader reader = new JsonReader(new InputStreamReader(new FileInputStream(new File("AllSets.json")), "UTF-8"));
+		try{
+			p.readArray(reader);
+		}finally{
+			reader.close();
+		}
+	}
 	
 	private DataParser(){
 		cards = new ArrayList<Card>(30000);
@@ -52,6 +51,15 @@ public class DataParser {
 		}finally{
 			reader.close();
 		}
+	}
+	
+	public Card cardFromName(String name){
+		for(Card c : cards){
+			if(name.startsWith(c.getName())){
+				return c;
+			}
+		}
+		return null;
 	}
 	
 	/**
