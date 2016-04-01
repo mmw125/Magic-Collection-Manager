@@ -1,7 +1,5 @@
 package interfaceComponents;
 
-import interfaceComponents.cardDisplay.PicAndPrices;
-
 import java.awt.BorderLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
@@ -54,7 +52,7 @@ public class SearchPanel extends Panel implements ListSelectionListener{
 	public SearchPanel(ArrayList<Card> associatedList){
 		super();
 		this.associatedList = associatedList;
-		picAndPrices = PicAndPrices.getInstance();
+		//picAndPrices = PicAndPrices.getInstance();
 		initPanel();
 	}
 	

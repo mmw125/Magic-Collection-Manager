@@ -1,7 +1,5 @@
 package util;
 
-import interfaceComponents.Console;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -37,7 +35,6 @@ public class PriceScraper implements Runnable{
 	
 	public void getPrices(Set setIn, DataParser parser){
 		String url = "http://magic.tcgplayer.com/db/price_guide.asp?setname="+nameChanges(setIn.getName());
-		Console.getInstance().setText(nameChanges(setIn.getName()));
 		System.out.println(setIn.getName());
 		PageParser pageParser = new PageParser(parser);
 		HtmlPage page = null;
