@@ -46,6 +46,9 @@ public class MainWindow{
 		getInstance().frame.revalidate();
 	}
 	
+	/**
+	 * Creates a new MainWindow object
+	 */
 	private MainWindow(){
 		frame = new JFrame("Magic Collection Manager");
 		
@@ -92,8 +95,13 @@ public class MainWindow{
 		new MainWindow();
 	}
 	
-	class MenuBar extends JMenuBar{
-		
+	/**
+	 * The menu bar along the top of the window
+	 * @author Mark
+	 */
+	class MenuBar extends JMenuBar {
+		private static final long serialVersionUID = 1L;
+
 		public MenuBar(){
 			init();
 		}

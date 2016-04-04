@@ -1,10 +1,5 @@
 package util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Deck {
@@ -30,35 +25,35 @@ public class Deck {
 		deckName = name;
 	}
 	
-	/**
-	 * Imports the deck from the given file
-	 * @param file the file to import
-	 * @throws IOException 
-	 */
-	public Deck(File file) throws IOException{
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new FileReader(file));
-		} catch (FileNotFoundException e) {
-			System.err.println("Unable to read the file");
-			e.printStackTrace();
-		}
-		if(reader != null){
-			String str;
-			while((str = reader.readLine()) != null){
-				str = str.trim();
-				String[] split = str.split(" ");
-				String cardName;
-				if(containsNumber(split[0])){
-					cardName = str.substring(split[0].length()+1);
-				}else{
-					cardName = str;
-				}
-//				DataParser.getInstance()
-				
-			}
-		}
-	}
+//	/**
+//	 * Imports the deck from the given file
+//	 * @param file the file to import
+//	 * @throws IOException 
+//	 */
+//	public Deck(File file) throws IOException{
+//		BufferedReader reader = null;
+//		try {
+//			reader = new BufferedReader(new FileReader(file));
+//		} catch (FileNotFoundException e) {
+//			System.err.println("Unable to read the file");
+//			e.printStackTrace();
+//		}
+//		if(reader != null){
+//			String str;
+//			while((str = reader.readLine()) != null){
+//				str = str.trim();
+//				String[] split = str.split(" ");
+//				String cardName;
+//				if(containsNumber(split[0])){
+//					cardName = str.substring(split[0].length()+1);
+//				}else{
+//					cardName = str;
+//				}
+////				DataParser.getInstance()
+//				
+//			}
+//		}
+//	}
 	
 	public boolean containsNumber(String s){
 		return s.contains("0") || s.contains("1") || s.contains("2") || s.contains("3") || s.contains("4") ||
