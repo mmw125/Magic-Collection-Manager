@@ -69,13 +69,12 @@ public class CardWithQuantity{
 	}
 	
 	public double getPrice(){
-		if(isFoil){
-			if(foilPrice != -1){
-				return foilPrice * quantity;
-			}else{
-				return card.getCurrentPrice() * 2 * quantity;
+		if(card.getCurrentPrice() != null) {
+			if(isFoil){
+				return card.getCurrentPrice().mFoilAverage * quantity;
 			}
+			return card.getCurrentPrice().mAverage * quantity;
 		}
-		return card.getCurrentPrice() * quantity;
+		return 0;
 	}
 }

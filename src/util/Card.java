@@ -1,12 +1,16 @@
 package util;
 
+import prices.PriceInfo;
+
 public class Card{
 	private int cmc;
 	private String name;
 	private String manaCost;
-	private double currentPrice = 0;
+	private PriceInfo currentPrice = null;
 	private Set set;
 	private Rarity rarity;
+	private int multiverseId;
+	private int collectorsNumber;
 	public void setName(String name){
 		this.name = name;
 	}
@@ -20,15 +24,17 @@ public class Card{
 	public void setCMC(int cmc){ this.cmc = cmc; }
 	public int getCMC(){ return cmc; }
 	public Set getSet(){ return set; }
-	public void setRarity(Rarity r){
-		rarity = r;
-	}
+	public void setRarity(Rarity r){ rarity = r; }
+	public void setMultiverseID(int id){ multiverseId = id; }
+	public int getMultiverseID() { return multiverseId; }
+	public void setCollectorsNumber(int id){ collectorsNumber = id; }
+	public int getCollectorsNumber() { return collectorsNumber; }
 	public boolean onlineOnly(){ return set.getOnlineOnly(); }
 	public void setSet(Set set){ this.set = set; }
-	public void setPrice(Double price){ currentPrice = price; }
-	public double getCurrentPrice(){ return currentPrice; }
+	public void setPrice(PriceInfo price){ currentPrice = price; }
+	public PriceInfo getCurrentPrice(){ return currentPrice; }
 	public String toString(){
-		if(currentPrice != 0){
+		if(currentPrice != null){
 			return set.getSetCode()+" "+name + " " + currentPrice;
 		}else{
 			return set.getSetCode()+" "+name; 
@@ -56,5 +62,8 @@ public class Card{
 	
 	public boolean isUncommonOrCommon() {
 		return isUncommon() || isCommon();
+	}
+	public boolean isBasic() {
+		return name.equals("Plains") || name.equals("Island") || name.equals("Swamp") || name.equals("Mountain") || name.equals("Forest");
 	}
 }

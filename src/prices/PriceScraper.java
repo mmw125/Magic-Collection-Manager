@@ -1,4 +1,4 @@
-package util;
+package prices;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,6 +11,10 @@ import java.util.Scanner;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
+import util.Card;
+import util.DataParser;
+import util.Set;
 
 /**
  * Scrapes the prices for all of the cards from TCGplayer
@@ -35,7 +39,6 @@ public class PriceScraper implements Runnable{
 	
 	public void getPrices(Set setIn, DataParser parser){
 		String url = "http://magic.tcgplayer.com/db/price_guide.asp?setname="+nameChanges(setIn.getName());
-		System.out.println(setIn.getName());
 		PageParser pageParser = new PageParser(parser);
 		HtmlPage page = null;
         try {
@@ -69,7 +72,7 @@ public class PriceScraper implements Runnable{
 	        				}catch(Exception e){
 	        					e.printStackTrace();
 	        				}
-	        				set.addPrice(str[0].trim(), price);
+	        				//set.addPrice(str[0].trim(), price);
 	        			}
 	        		}
 	        	}	
@@ -111,7 +114,7 @@ public class PriceScraper implements Runnable{
 	
 	public void wipeCurrentCardData(){
 		for(Card c : parser.getCards()){
-			c.setPrice(new Double("0"));
+			c.setPrice(null);
 		}
 	}
 	
@@ -126,7 +129,7 @@ public class PriceScraper implements Runnable{
 		f.createNewFile();
 		PrintWriter writer = new PrintWriter(f);
 		for(Card c : parser.getCards()){
-			if(c.getCurrentPrice() != 0){
+			if(c.getCurrentPrice() != null){
 				writer.println(c.getSet().getCode()+"~"+c.getName()+"~"+c.getCurrentPrice());
 			}
 		}
@@ -217,7 +220,7 @@ public class PriceScraper implements Runnable{
 				splitLine = line.split("~");
 				for(Set s : parser.getSets()){
 					if(splitLine[0].equals(s.getCode())){
-						s.addPrice(splitLine[1], Double.parseDouble(splitLine[2]));
+						//s.addPrice(splitLine[1], Double.parseDouble(splitLine[2]));
 						break;
 					}
 				}

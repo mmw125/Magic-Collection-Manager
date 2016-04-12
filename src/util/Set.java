@@ -23,22 +23,22 @@ public class Set extends Object{
 	public String getName(){ return setName; }
 	public String getCode(){ return getSetCode(); }
 	public void addCard(Card c){ cards.add(c); }
-	public void addPrice(String cardName, double price){
-		if(cardName.contains("//")){
-			String[] cardNames = cardName.split("//");
-			cardName = cardNames[0].trim();
-			addPrice(cardNames[1].trim(), price);
-		}
-		if(cardName.contains("(")){
-			cardName = cardName.substring(0, cardName.indexOf('(')).trim();
-		}
-		for(Card c : cards){
-			if(c.getName().replace("Æ", "Ae").replace("ö", "o").equals(cardName) && c.getCurrentPrice() == 0){
-				c.setPrice(price);
-				break;
-			}
-		}
-	}
+//	public void addPrice(String cardName, double price){
+//		if(cardName.contains("//")){
+//			String[] cardNames = cardName.split("//");
+//			cardName = cardNames[0].trim();
+//			addPrice(cardNames[1].trim(), price);
+//		}
+//		if(cardName.contains("(")){
+//			cardName = cardName.substring(0, cardName.indexOf('(')).trim();
+//		}
+//		for(Card c : cards){
+//			if(c.getName().replace("Æ", "Ae").replace("ö", "o").equals(cardName) && c.getCurrentPrice() == 0){
+//				c.setPrice(price);
+//				break;
+//			}
+//		}
+//	}
 	
 //	public void addPrice(String cardName, ArrayList<PriceWithDate> doubleList) {
 //		if(cardName.contains("//")){

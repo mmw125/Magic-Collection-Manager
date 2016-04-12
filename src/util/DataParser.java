@@ -98,7 +98,7 @@ public class DataParser {
 				}
 				reader.endArray();
 //			}else if(name.equals("gathererCode")){
-//				
+//
 //			}else if(name.equals("oldCode")){
 //				
 //			}else if(name.equals("releaseDate")){
@@ -144,6 +144,10 @@ public class DataParser {
 				}catch(NumberFormatException e){
 					reader.skipValue();
 				}
+			}else if(name.equals("number")){
+				c.setCollectorsNumber(reader.nextInt());
+			}else if(name.equals("multiverseid")){
+				c.setMultiverseID(reader.nextInt());
 			}else if(name.equals("rarity")){
 				String rarityString = reader.nextString();
 				Rarity rarity = Rarity.stringToRarity(rarityString);

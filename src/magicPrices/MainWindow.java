@@ -7,18 +7,14 @@ import interfaceComponents.cardDisplay.PicAndPrices;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
 
 import util.DataParser;
-import util.PriceScraper;
 
 public class MainWindow{
 	private JTabbedPane tabbedPane;
@@ -72,9 +68,9 @@ public class MainWindow{
 		frame.getContentPane().add(bar, BorderLayout.NORTH);
 //		frame.getContentPane().add(Console.getInstance().getLabel(), BorderLayout.SOUTH);
 		
-		PriceScraper scraper = new PriceScraper(parser);
+		//PriceScraper scraper = new PriceScraper(parser);
 		//Runs the scraper on the main thread
-		scraper.run();
+		//scraper.run();
 //		new Thread(scraper).start();
 		
 //		frame.getContentPane().add(Console.getInstance().getLabel(), BorderLayout.SOUTH);
@@ -110,27 +106,27 @@ public class MainWindow{
 			JMenu file = new JMenu("File");
 			this.add(file);
 			
-			JMenuItem updatePrices = new JMenuItem("Update Prices");
-			updatePrices.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					Thread t = new Thread(new Runnable() {
-						
-						@Override
-						public void run() {
-							PriceScraper scraper = new PriceScraper(parser);
-							scraper.getAllPrices();
-							try {
-								scraper.exportCurrentData();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-					});
-					t.run();
-				}
-			});
-			file.add(updatePrices);
+//			JMenuItem updatePrices = new JMenuItem("Update Prices");
+//			updatePrices.addActionListener(new ActionListener() {
+//				@Override
+//				public void actionPerformed(ActionEvent e) {
+//					Thread t = new Thread(new Runnable() {
+//						
+//						@Override
+//						public void run() {
+//							PriceScraper scraper = new PriceScraper(parser);
+//							scraper.getAllPrices();
+//							try {
+//								scraper.exportCurrentData();
+//							} catch (IOException e) {
+//								e.printStackTrace();
+//							}
+//						}
+//					});
+//					t.run();
+//				}
+//			});
+			//file.add(updatePrices);
 		}
 	}
 }

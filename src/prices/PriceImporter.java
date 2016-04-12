@@ -1,4 +1,4 @@
-package util;
+package prices;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
