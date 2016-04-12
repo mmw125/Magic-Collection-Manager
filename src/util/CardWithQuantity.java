@@ -5,7 +5,6 @@ public class CardWithQuantity{
 	private Card card;
 	private int quantity;
 	private boolean isFoil;
-	private double foilPrice = -1;
 	
 	public CardWithQuantity(Card c){
 		this(c, 1);
@@ -51,10 +50,6 @@ public class CardWithQuantity{
 		}
 		output.append(getPrice());
 		return output.toString();
-	}
-	
-	public void setFoilPrice(double foilPrice){
-		this.foilPrice = foilPrice;
 	}
 	
 	public boolean equals(Object o){

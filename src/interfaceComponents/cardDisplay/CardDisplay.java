@@ -18,67 +18,73 @@ import util.Card;
 
 /**
  * Displays card images downloaded from mtgimage.com
+ * 
  * @author Mark Wiggans
  */
-public class CardDisplay extends JPanel implements Runnable{
+public class CardDisplay extends JPanel implements Runnable {
 	private static final long serialVersionUID = 1L;
 	private Card card;
 	private Image image;
 	private Dimension cardSize = new Dimension(480, 680);
-	
+
 	/**
-	 * Creates a new CardDisplay without a card 
+	 * Creates a new CardDisplay without a card
 	 */
-	public CardDisplay(){
+	public CardDisplay() {
 		super();
 		setPreferredSize(new Dimension(480, 680));
 	}
-	
+
 	/**
 	 * Creates a new CardDisplay with a card
+	 * 
 	 * @param c
 	 */
-	public CardDisplay(Card c){
+	public CardDisplay(Card c) {
 		this();
 		card = c;
 	}
-	
+
 	/**
 	 * Sets the height of the card display then generates a width
+	 * 
 	 * @param height
 	 */
-	public void setCardHeight(int height){
-		double width = (int) ((12/17) * height);
+	public void setCardHeight(int height) {
+		double width = (int) ((12 / 17) * height);
 		System.out.println(width + ", " + height);
 		setCardSize(new Dimension((int) width, height));
 	}
-	
+
 	/**
 	 * Sets the size of the card to the given size
-	 * @param d the new size of the card
+	 * 
+	 * @param d
+	 *            the new size of the card
 	 */
-	public void setCardSize(Dimension d){
+	public void setCardSize(Dimension d) {
 		cardSize = d;
 		try {
-			if(card != null){
+			if (card != null) {
 				getImage(card);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * Sets the card to be painted in the window
-	 * This action is run in a different thread because 
-	 * fetching the image might take a bit of time
-	 * @param c the card
+	 * Sets the card to be painted in the window This action is run in a
+	 * different thread because fetching the image might take a bit of time
+	 * 
+	 * @param c
+	 *            the card
 	 */
-	public void setCard(Card c){
+	public void setCard(Card c) {
 		card = c;
 		new Thread(this).run();
 	}
-	
+
 	/**
 	 * Gets the image and paints it
 	 */
@@ -91,46 +97,46 @@ public class CardDisplay extends JPanel implements Runnable{
 			e.printStackTrace();
 		}
 		SwingUtilities.invokeLater(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				repaint();
 			}
 		});
-		
+
 	}
-	
+
 	/**
-	 * Paints the 
+	 * Paints the
 	 */
-	public void repaint(){
+	public void repaint() {
 		paint(getGraphics());
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
-        super.paint( g );
-        if(image != null){
-     	   g.drawImage(image,  0 , 0 , null);
-     	   //setPreferredSize(new Dimension(image.getWidth(imageObserver), image.getHeight(imageObserver)));
-        }
-       
-      }
-	
+		super.paint(g);
+		if (image != null) {
+			g.drawImage(image, 0, 0, null);
+			// setPreferredSize(new Dimension(image.getWidth(imageObserver),
+			// image.getHeight(imageObserver)));
+		}
+	}
+
 	private Image getImage(Card c) throws IOException {
-		File f = new File("imageCache/"+c.getName()+"-"+c.getSet().getCode()+".jpg");
-		if(f.exists()){
-			return ImageIO.read(f).getScaledInstance((int)cardSize.getWidth(), (int)cardSize.getHeight(), 0);
-		}else{
-			URL url = new URL("http://mtgimage.com/set/"+c.getSet().getCode()+"/"+c.getName()+".jpg");
+		File f = new File("imageCache/" + c.getName() + "-" + c.getSet().getCode() + ".jpg");
+		if (f.exists()) {
+			return ImageIO.read(f).getScaledInstance((int) cardSize.getWidth(), (int) cardSize.getHeight(), 0);
+		} else {
+			URL url = new URL("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" + c.getMultiverseID() + "&type=card");
 			InputStream is = null;
-			try{
+			try {
 				is = url.openStream();
-			}catch(Exception e){
-				url = new URL("http://mtgimage.com/card/"+c.getName()+".jpg");
-				try{
+			} catch (Exception e) {
+				url = new URL("http://magiccards.info/scans/en/"+c.getSet()+"/"+c.getCollectorsNumber()+".jpg");
+				try {
 					is = url.openStream();
-				}catch(Exception e2){
+				} catch (Exception e2) {
 					System.err.print("Could not access backup image");
 					return null;
 				}

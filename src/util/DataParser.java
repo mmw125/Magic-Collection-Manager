@@ -145,7 +145,7 @@ public class DataParser {
 					reader.skipValue();
 				}
 			}else if(name.equals("number")){
-				c.setCollectorsNumber(reader.nextInt());
+				c.setCollectorsNumber(reader.nextString());
 			}else if(name.equals("multiverseid")){
 				c.setMultiverseID(reader.nextInt());
 			}else if(name.equals("rarity")){

@@ -10,7 +10,7 @@ public class Card{
 	private Set set;
 	private Rarity rarity;
 	private int multiverseId;
-	private int collectorsNumber;
+	private String collectorsNumber = null;
 	public void setName(String name){
 		this.name = name;
 	}
@@ -27,8 +27,8 @@ public class Card{
 	public void setRarity(Rarity r){ rarity = r; }
 	public void setMultiverseID(int id){ multiverseId = id; }
 	public int getMultiverseID() { return multiverseId; }
-	public void setCollectorsNumber(int id){ collectorsNumber = id; }
-	public int getCollectorsNumber() { return collectorsNumber; }
+	public void setCollectorsNumber(String id){ collectorsNumber = id; }
+	public String getCollectorsNumber() { return collectorsNumber; }
 	public boolean onlineOnly(){ return set.getOnlineOnly(); }
 	public void setSet(Set set){ this.set = set; }
 	public void setPrice(PriceInfo price){ currentPrice = price; }

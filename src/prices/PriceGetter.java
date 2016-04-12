@@ -20,6 +20,9 @@ public class PriceGetter implements Runnable {
 	private PriceReciever rec;
 	
 	public PriceGetter(Card cardToGet, PriceReciever rec) {
+		if(cardToGet.getCurrentPrice() != null) {
+			rec.getPrice(cardToGet, cardToGet.getCurrentPrice());
+		}
 		if(webClient == null) {
 			webClient = new WebClient();
 		}
@@ -35,13 +38,14 @@ public class PriceGetter implements Runnable {
 			priceUrl = new URL("http://partner.tcgplayer.com/x3/phl.asmx/p?pk=MTGFAMILIA&s="
 					+ URLEncoder.encode(card.getSet().getName().replace(Character.toChars(0xC6)[0] + "", "Ae"), "UTF-8") + "&p="
 					+ URLEncoder.encode(card.getName().replace(Character.toChars(0xC6)[0] + "", "Ae"), "UTF-8")
-					+ URLEncoder.encode((card.isBasic() ? " (" + card.getCollectorsNumber() + ")" : ""),
-							"UTF-8"));
+					+ URLEncoder.encode((card.isBasic() ? " (" + card.getCollectorsNumber() + ")" : ""), "UTF-8"));
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
+		
+		System.out.println(priceUrl);
 
 		/* Fetch the information from the web */
 		//String result = IOUtils.toString(FamiliarActivity.getHttpInputStream(priceUrl, null));
@@ -63,6 +67,7 @@ public class PriceGetter implements Runnable {
 		pi.mHigh = Double.parseDouble(getString("hiprice", element));
 		pi.mFoilAverage = Double.parseDouble(getString("foilavgprice", element));
 		pi.mUrl = getString("link", element);
+		card.setPrice(pi);
 		rec.getPrice(card, pi);
 	}
 	

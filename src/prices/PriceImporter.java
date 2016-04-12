@@ -23,8 +23,8 @@ public class PriceImporter{
 	public boolean connectToServer() {
 		boolean login = false;
 		try {
-			ftpClient.connect("stormsproductions.com");
-			login = ftpClient.login("projectXman", "projectXman1!");
+			//ftpClient.connect("....com");
+			//login = ftpClient.login("...", "...");
 		} catch (Exception e){
 			e.printStackTrace();
 		}
