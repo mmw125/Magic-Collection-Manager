@@ -35,7 +35,7 @@ public class Card{
 	public PriceInfo getCurrentPrice(){ return currentPrice; }
 	public String toString(){
 		if(currentPrice != null){
-			return set.getSetCode()+" "+name + " " + currentPrice;
+			return set.getSetCode()+" "+name + " " + currentPrice.mAverage;
 		}else{
 			return set.getSetCode()+" "+name; 
 		}

@@ -24,10 +24,6 @@ public class MainWindow{
 	
 	private static MainWindow instance; 
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public static MainWindow getInstance(){
 		if(instance == null){
 			instance = new MainWindow();
@@ -66,14 +62,6 @@ public class MainWindow{
 		
 		MenuBar bar = new MenuBar();
 		frame.getContentPane().add(bar, BorderLayout.NORTH);
-//		frame.getContentPane().add(Console.getInstance().getLabel(), BorderLayout.SOUTH);
-		
-		//PriceScraper scraper = new PriceScraper(parser);
-		//Runs the scraper on the main thread
-		//scraper.run();
-//		new Thread(scraper).start();
-		
-//		frame.getContentPane().add(Console.getInstance().getLabel(), BorderLayout.SOUTH);
 		
 		picAndPrices = PicAndPrices.getInstance();
 		frame.add(picAndPrices.getPanel(), BorderLayout.EAST);

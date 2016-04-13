@@ -10,7 +10,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.xml.XmlPage;
 
 import util.Card;
 
@@ -26,9 +26,35 @@ public class PriceGetter implements Runnable {
 		if(webClient == null) {
 			webClient = new WebClient();
 		}
-		cardToGet = card;
+		card = cardToGet;
 		this.rec = rec;
 		new Thread(this).run();
+	}
+	
+	public static String nameChanges(String setName){
+		switch (setName){
+			case "Modern Masters 2015 Edition": return "Modern Masters 2015"; 
+			case "Magic 2015 Core Set": return "Magic 2015 (M15)"; 
+			case "Magic 2014 Core Set":	return "Magic 2014 (M14)";
+			case "Magic 2013": return "Magic 2013 (M13)";
+			case "Magic 2012": return "Magic 2012 (M12)";
+			case "Magic 2011": return "Magic 2011 (M11)";
+			case "Magic 2010": return "Magic 2010 (M10)";
+			case "Limited Edition Alpha": return "Alpha Edition";
+			case "Limited Edition Beta": return "Beta Edition";
+			case "Magic: The Gathering-Commander": return "Commander";
+			case "Premium Deck Series: Graveborn": return "PDS: Graveborn";
+			case "Duel Decks: Venser vs. Koth": return "Duel Decks: Phyrexia vs the Coalition";
+			case "Planechase 2012 Edition": return "Planechase 2012";
+			case "Magic: The Gathering—Conspiracy": return "Conspiracy";
+			case "Ravnica: City of Guilds": return "Ravnica";
+			case "Tenth Edition": return "10th Edition";
+			case "Modern Event Deck 2014": return "Magic Modern Event Deck";
+			case "Commander 2013 Edition": return "Commander 2013";
+			case "Ninth Edition": return "9th Edition";
+			case "Eighth Edition": return "8th Edition";
+		}
+		return setName;
 	}
 
 	@Override
@@ -36,7 +62,7 @@ public class PriceGetter implements Runnable {
 		URL priceUrl = null;
 		try {
 			priceUrl = new URL("http://partner.tcgplayer.com/x3/phl.asmx/p?pk=MTGFAMILIA&s="
-					+ URLEncoder.encode(card.getSet().getName().replace(Character.toChars(0xC6)[0] + "", "Ae"), "UTF-8") + "&p="
+					+ URLEncoder.encode(PriceGetter.nameChanges(card.getSet().getName()).replace(Character.toChars(0xC6)[0] + "", "Ae"), "UTF-8") + "&p="
 					+ URLEncoder.encode(card.getName().replace(Character.toChars(0xC6)[0] + "", "Ae"), "UTF-8")
 					+ URLEncoder.encode((card.isBasic() ? " (" + card.getCollectorsNumber() + ")" : ""), "UTF-8"));
 		} catch (MalformedURLException e1) {
@@ -49,7 +75,7 @@ public class PriceGetter implements Runnable {
 
 		/* Fetch the information from the web */
 		//String result = IOUtils.toString(FamiliarActivity.getHttpInputStream(priceUrl, null));
-		HtmlPage page = null;
+		XmlPage page = null;
         try {
                 page = webClient.getPage(priceUrl);
         } catch (Exception e) {

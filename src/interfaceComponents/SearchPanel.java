@@ -1,6 +1,7 @@
 package interfaceComponents;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Insets;
 import java.util.ArrayList;
 
@@ -52,7 +53,6 @@ public class SearchPanel extends Panel implements ListSelectionListener{
 	public SearchPanel(ArrayList<Card> associatedList){
 		super();
 		this.associatedList = associatedList;
-		//picAndPrices = PicAndPrices.getInstance();
 		initPanel();
 	}
 	
@@ -83,9 +83,11 @@ public class SearchPanel extends Panel implements ListSelectionListener{
 		model = new DefaultListModel<Card>();
 		list = new JList<Card>(model);
 		list.addListSelectionListener(this);
+		list.setMinimumSize(new Dimension(500, 300));
 //		list.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5)));
 		panel.add(new JScrollPane(list), BorderLayout.CENTER);
 		panel.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5)));
+		panel.setMinimumSize(new Dimension(500, 300));
 	}
 	
 	/**

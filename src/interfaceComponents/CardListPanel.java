@@ -144,6 +144,7 @@ public class CardListPanel extends Panel implements MouseListener, ListSelection
 				model.removeElement(list.getSelectedValue());
 			}
 			updatePrice();
+			list.repaint();
 		}
 	}
 
@@ -181,11 +182,10 @@ public class CardListPanel extends Panel implements MouseListener, ListSelection
 			}
 			if(!alreadyExists){
 				model.addElement(new CardWithQuantity(card));
-			} else {
-				new PriceGetter(card, this);
 			}
-			list.revalidate();
+			list.repaint();
 			updatePrice();
+			new PriceGetter(card, this);
 		}
 	}
 

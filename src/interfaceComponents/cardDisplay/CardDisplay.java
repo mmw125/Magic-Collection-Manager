@@ -118,8 +118,6 @@ public class CardDisplay extends JPanel implements Runnable {
 		super.paint(g);
 		if (image != null) {
 			g.drawImage(image, 0, 0, null);
-			// setPreferredSize(new Dimension(image.getWidth(imageObserver),
-			// image.getHeight(imageObserver)));
 		}
 	}
 
