@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Vector;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -15,23 +16,40 @@ import com.gargoylesoftware.htmlunit.xml.XmlPage;
 import util.Card;
 
 public class PriceGetter implements Runnable {
-	private static WebClient webClient = null;
-	private Card card;
-	private PriceReciever rec;
+	private static PriceGetter instance;
 	
-	public PriceGetter(Card cardToGet, PriceReciever rec) {
-		if(cardToGet.getCurrentPrice() != null) {
-			rec.getPrice(cardToGet, cardToGet.getCurrentPrice());
-		}
-		if(webClient == null) {
-			webClient = new WebClient();
-		}
-		card = cardToGet;
-		this.rec = rec;
+	private WebClient webClient = null;
+	private Vector<Card> cardsToGet;
+	private boolean shutdown;
+	
+	private PriceGetter() {
+		webClient = new WebClient();
+		cardsToGet = new Vector<Card>();
+		shutdown = false;
 		new Thread(this).run();
 	}
 	
-	public static String nameChanges(String setName){
+	private static PriceGetter getInstance() {
+		if(instance == null) {
+			instance = new PriceGetter();
+		}
+		return instance;
+	}
+	
+	public static void shutdown() {
+		getInstance().cardsToGet.clear();
+		getInstance().shutdown = true;
+	}
+	
+	/**
+	 * Gets the card price 
+	 * @param card the card to update with its price
+	 */
+	public static void getCardPrice(Card card) {
+		getInstance().cardsToGet.addElement(card);
+	}
+	
+	private static String nameChanges(String setName){
 		switch (setName){
 			case "Modern Masters 2015 Edition": return "Modern Masters 2015"; 
 			case "Magic 2015 Core Set": return "Magic 2015 (M15)"; 
@@ -59,6 +77,26 @@ public class PriceGetter implements Runnable {
 
 	@Override
 	public void run() {
+		System.out.println("PriceGetter thread created!");
+		while(!shutdown) {
+			if(cardsToGet.size() == 0) {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+					return;
+				}
+			} else {
+				Card c = cardsToGet.get(0);
+				System.out.println("Getting price for " + c.getName());
+				cardsToGet.remove(0);
+				updateCardPrice(c);
+			}
+		}
+	}
+	
+	
+	private void updateCardPrice(Card card) {
 		URL priceUrl = null;
 		try {
 			priceUrl = new URL("http://partner.tcgplayer.com/x3/phl.asmx/p?pk=MTGFAMILIA&s="
@@ -94,7 +132,6 @@ public class PriceGetter implements Runnable {
 		pi.mFoilAverage = Double.parseDouble(getString("foilavgprice", element));
 		pi.mUrl = getString("link", element);
 		card.setPrice(pi);
-		rec.getPrice(card, pi);
 	}
 	
 	private String getString(String tagName, Element element) {

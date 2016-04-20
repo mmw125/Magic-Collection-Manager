@@ -84,7 +84,6 @@ public class SearchPanel extends Panel implements ListSelectionListener{
 		list = new JList<Card>(model);
 		list.addListSelectionListener(this);
 		list.setMinimumSize(new Dimension(500, 300));
-//		list.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5)));
 		panel.add(new JScrollPane(list), BorderLayout.CENTER);
 		panel.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5)));
 		panel.setMinimumSize(new Dimension(500, 300));

@@ -11,9 +11,6 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import prices.PriceGetter;
-import prices.PriceInfo;
-import prices.PriceReciever;
 import util.Card;
 import util.CardWithQuantity;
 
@@ -23,7 +20,7 @@ import util.CardWithQuantity;
  * the picAndPrices to display that card. This also has a price display
  * @author Mark Wiggans
  */
-public class CardListPanel extends Panel implements MouseListener, ListSelectionListener, PriceReciever{
+public class CardListPanel extends Panel implements MouseListener, ListSelectionListener {
 	private JList<Card> associatedList;
 	private JList<CardWithQuantity> list;
 	private DefaultListModel<CardWithQuantity> model;
@@ -185,13 +182,6 @@ public class CardListPanel extends Panel implements MouseListener, ListSelection
 			}
 			list.repaint();
 			updatePrice();
-			new PriceGetter(card, this);
 		}
-	}
-
-	@Override
-	public void getPrice(Card card, PriceInfo info) {
-		list.repaint();
-		updatePrice();
 	}
 }

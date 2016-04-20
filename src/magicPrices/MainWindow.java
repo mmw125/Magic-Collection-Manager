@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 
 import util.DataParser;
 
@@ -77,6 +78,16 @@ public class MainWindow{
 	
 	public static void main(String[] args) {
 		new MainWindow();
+	}
+	
+	public void repaint() {
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				tabbedPane.repaint();
+			}
+		});
 	}
 	
 	/**

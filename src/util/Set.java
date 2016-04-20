@@ -23,6 +23,7 @@ public class Set extends Object{
 	public String getName(){ return setName; }
 	public String getCode(){ return getSetCode(); }
 	public void addCard(Card c){ cards.add(c); }
+	
 //	public void addPrice(String cardName, double price){
 //		if(cardName.contains("//")){
 //			String[] cardNames = cardName.split("//");

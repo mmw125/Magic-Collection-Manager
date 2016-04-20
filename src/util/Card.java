@@ -1,8 +1,9 @@
 package util;
 
+import magicPrices.MainWindow;
 import prices.PriceInfo;
 
-public class Card{
+public class Card {
 	private int cmc;
 	private String name;
 	private String manaCost;
@@ -31,9 +32,22 @@ public class Card{
 	public String getCollectorsNumber() { return collectorsNumber; }
 	public boolean onlineOnly(){ return set.getOnlineOnly(); }
 	public void setSet(Set set){ this.set = set; }
-	public void setPrice(PriceInfo price){ currentPrice = price; }
-	public PriceInfo getCurrentPrice(){ return currentPrice; }
+	
+	public void setPrice(PriceInfo price) {
+		currentPrice = price;
+		MainWindow.getInstance().repaint();
+	}
+	
+	public PriceInfo getCurrentPrice(){ 
+		if(currentPrice == null) {
+			
+			return null;
+		}
+		return currentPrice; 
+	}
+	
 	public String toString(){
+		PriceInfo currentPrice = getCurrentPrice();
 		if(currentPrice != null){
 			return set.getSetCode()+" "+name + " " + currentPrice.mAverage;
 		}else{
