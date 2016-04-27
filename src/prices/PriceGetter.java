@@ -17,7 +17,7 @@ import util.Card;
 
 public class PriceGetter implements Runnable {
 	private static PriceGetter instance;
-	
+	private Thread t;
 	private WebClient webClient = null;
 	private Vector<Card> cardsToGet;
 	private boolean shutdown;
@@ -26,7 +26,8 @@ public class PriceGetter implements Runnable {
 		webClient = new WebClient();
 		cardsToGet = new Vector<Card>();
 		shutdown = false;
-		new Thread(this).run();
+		t = new Thread(this);
+		t.start();
 	}
 	
 	private static PriceGetter getInstance() {
@@ -115,10 +116,12 @@ public class PriceGetter implements Runnable {
 		//String result = IOUtils.toString(FamiliarActivity.getHttpInputStream(priceUrl, null));
 		XmlPage page = null;
         try {
-                page = webClient.getPage(priceUrl);
+            page = webClient.getPage(priceUrl);
         } catch (Exception e) {
             System.out.println("Invalid web address");
             e.printStackTrace();
+            card.setPrice(new PriceInfo());
+            return;
         }
 
 		/* Parse the XML */

@@ -1,6 +1,7 @@
 package util;
 
 import magicPrices.MainWindow;
+import prices.PriceGetter;
 import prices.PriceInfo;
 
 public class Card {
@@ -12,6 +13,8 @@ public class Card {
 	private Rarity rarity;
 	private int multiverseId;
 	private String collectorsNumber = null;
+	private boolean fetchingPrice = false;
+	
 	public void setName(String name){
 		this.name = name;
 	}
@@ -35,12 +38,16 @@ public class Card {
 	
 	public void setPrice(PriceInfo price) {
 		currentPrice = price;
+		System.out.println("Trying to update the window");
 		MainWindow.getInstance().repaint();
 	}
 	
 	public PriceInfo getCurrentPrice(){ 
 		if(currentPrice == null) {
-			
+			if(!fetchingPrice) {
+				PriceGetter.getCardPrice(this);
+				fetchingPrice = true;
+			}
 			return null;
 		}
 		return currentPrice; 

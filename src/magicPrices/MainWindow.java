@@ -77,7 +77,7 @@ public class MainWindow{
 	}
 	
 	public static void main(String[] args) {
-		new MainWindow();
+		getInstance();
 	}
 	
 	public void repaint() {
