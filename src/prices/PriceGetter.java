@@ -78,7 +78,6 @@ public class PriceGetter implements Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("PriceGetter thread created!");
 		while(!shutdown) {
 			if(cardsToGet.size() == 0) {
 				try {
@@ -89,7 +88,6 @@ public class PriceGetter implements Runnable {
 				}
 			} else {
 				Card c = cardsToGet.get(0);
-				System.out.println("Getting price for " + c.getName());
 				cardsToGet.remove(0);
 				updateCardPrice(c);
 			}
@@ -109,11 +107,7 @@ public class PriceGetter implements Runnable {
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
-		
-		System.out.println(priceUrl);
 
-		/* Fetch the information from the web */
-		//String result = IOUtils.toString(FamiliarActivity.getHttpInputStream(priceUrl, null));
 		XmlPage page = null;
         try {
             page = webClient.getPage(priceUrl);

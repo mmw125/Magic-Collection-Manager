@@ -38,7 +38,6 @@ public class Card {
 	
 	public void setPrice(PriceInfo price) {
 		currentPrice = price;
-		System.out.println("Trying to update the window");
 		MainWindow.getInstance().repaint();
 	}
 	
@@ -73,17 +72,10 @@ public class Card {
 		return false;
 	}
 	
-	public boolean isUncommon(){
-		return rarity == Rarity.UNCOMMON;
+	public Rarity getRarity() {
+		return rarity;
 	}
 	
-	public boolean isCommon(){
-		return rarity == Rarity.COMMON;
-	}
-	
-	public boolean isUncommonOrCommon() {
-		return isUncommon() || isCommon();
-	}
 	public boolean isBasic() {
 		return name.equals("Plains") || name.equals("Island") || name.equals("Swamp") || name.equals("Mountain") || name.equals("Forest");
 	}

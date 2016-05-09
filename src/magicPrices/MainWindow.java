@@ -17,6 +17,10 @@ import javax.swing.SwingUtilities;
 
 import util.DataParser;
 
+/**
+ * The Window that everything goes into
+ * @author Mark Wiggans
+ */
 public class MainWindow{
 	private JTabbedPane tabbedPane;
 	private JFrame frame;
@@ -92,7 +96,7 @@ public class MainWindow{
 	
 	/**
 	 * The menu bar along the top of the window
-	 * @author Mark
+	 * @author Mark Wiggans
 	 */
 	class MenuBar extends JMenuBar {
 		private static final long serialVersionUID = 1L;

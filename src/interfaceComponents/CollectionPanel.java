@@ -26,6 +26,10 @@ public class CollectionPanel extends Panel{
 	private CardListPanel collectionPanel;
 	private DataParser parser;
 	private SearchPanel searchPanel;
+	
+	/**
+	 * Creates a new collection panel
+	 */
 	public CollectionPanel(){
 		super();
 		this.parser = DataParser.getInstance();

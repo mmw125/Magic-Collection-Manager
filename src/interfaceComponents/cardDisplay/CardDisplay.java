@@ -26,6 +26,7 @@ public class CardDisplay extends JPanel implements Runnable {
 	private Card card;
 	private Image image;
 	private Dimension cardSize = new Dimension(480, 680);
+	private static final String CACHE_LOCATION = "cache/imageCache/";
 
 	/**
 	 * Creates a new CardDisplay without a card
@@ -107,12 +108,15 @@ public class CardDisplay extends JPanel implements Runnable {
 	}
 
 	/**
-	 * Paints the
+	 * Calls paint()
 	 */
 	public void repaint() {
 		paint(getGraphics());
 	}
 
+	/**
+	 * Paints the image on the canvas
+	 */
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -121,8 +125,17 @@ public class CardDisplay extends JPanel implements Runnable {
 		}
 	}
 
+	/**
+	 * Acquires the image for the given card. First, it checks if the file
+	 * already exists in the image cache. Then, it checks the offical gatherer website
+	 * at http://gatherer.wizards.com/. If that fails, it attempts to get it from
+	 * http://magiccards.info/. If that fails, it returns null
+	 * @param c the card whose image to get
+	 * @return the card's image
+	 * @throws IOException
+	 */
 	private Image getImage(Card c) throws IOException {
-		File f = new File("imageCache/" + c.getName() + "-" + c.getSet().getCode() + ".jpg");
+		File f = new File(CACHE_LOCATION + c.getName() + "-" + c.getSet().getCode() + ".jpg");
 		if (f.exists()) {
 			return ImageIO.read(f).getScaledInstance((int) cardSize.getWidth(), (int) cardSize.getHeight(), 0);
 		} else {

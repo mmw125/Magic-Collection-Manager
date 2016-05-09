@@ -1,13 +1,16 @@
 package util;
 
-
+/**
+ * Holds a card and its quantity along with if its foil
+ * @author Mark Wiggans
+ */
 public class CardWithQuantity{
 	private Card card;
 	private int quantity;
 	private boolean isFoil;
 	
 	public CardWithQuantity(Card c){
-		this(c, 1);
+		this(c, 1, false);
 	}
 	
 	public CardWithQuantity(Card c, int quantity){
@@ -37,6 +40,10 @@ public class CardWithQuantity{
 	}
 	
 	public void setQuantity(int quan){
+		if(quan < 0) {
+			System.err.println("Quantity cannot be negative!");
+			quan = 0;
+		}
 		quantity = quan;
 	}
 	

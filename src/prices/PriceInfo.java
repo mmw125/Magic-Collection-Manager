@@ -2,6 +2,10 @@ package prices;
 
 import java.nio.ByteBuffer;
 
+/**
+ * Stores the different prices for a card
+ * @author Mark Wiggans
+ */
 public class PriceInfo {
     public double mLow = 0;
     public double mAverage = 0;
@@ -9,10 +13,17 @@ public class PriceInfo {
     public double mFoilAverage = 0;
     public String mUrl;
 
+    /**
+     * Creates a new PriceInfo object with values of 0
+     */
     public PriceInfo() {
 
     }
 
+    /**
+     * Initializes the object with the given bytes
+     * @param bytes the bytes with the pricing data
+     */
     public PriceInfo(byte[] bytes) {
         this.fromBytes(bytes);
     }
@@ -55,5 +66,4 @@ public class PriceInfo {
         buf2.get(stringBuf);
         mUrl = new String(stringBuf);
     }
-
 }

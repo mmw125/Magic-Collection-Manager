@@ -11,11 +11,20 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+/**
+ * Allows you to easily add cards to two CardListPanels and
+ * compare the prices between the two
+ * @author Mark Wiggans
+ */
 public class TradePanel extends Panel{
 	private JPanel container;
 	private SearchPanel searchPanel;
 	private CardListPanel list1;
 	private CardListPanel list2;
+	
+	/**
+	 * Creates a new TradePanel
+	 */
 	public TradePanel(){
 		super();
 
